@@ -29,6 +29,7 @@ import java.util.List;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = CourseControllerTest.class, secure = false)
@@ -89,6 +90,27 @@ public class CourseControllerTest
         assertEquals("Rest API Returns List", er, tr);
         
         
+    }
+    
+    @Test
+    public void addNewCourse() throws Exception
+    {
+        String apiUrl = "/courses/course/add";
+        
+        Instructor inst = new Instructor("Bob");
+        
+        Course course = new Course("Another TEst", inst);
+        
+        Mockito.when(courseService.save(any(Course.class))).thenReturn(course);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        String courseString = mapper.writeValueAsString(course);
+    
+        RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
+        MvcResult r = mockMvc.perform(rb).andReturn();
+        String tr = r.getResponse().getContentAsString();
+        
+        assertEquals("Rest API saves new course and returns it", courseString, tr);
     }
     
 }
