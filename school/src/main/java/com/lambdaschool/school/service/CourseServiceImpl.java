@@ -55,4 +55,11 @@ public class CourseServiceImpl implements CourseService
             throw new EntityNotFoundException();
         }
     }
+    
+    @Override
+    public Course save(Course course)
+    {
+        courserepos.save(course);
+        return course;
+    }
 }

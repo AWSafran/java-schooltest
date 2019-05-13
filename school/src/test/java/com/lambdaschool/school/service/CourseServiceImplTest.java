@@ -1,7 +1,10 @@
 package com.lambdaschool.school.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambdaschool.school.SchoolApplicationTest;
 import com.lambdaschool.school.SchoolApplicationTests;
+import com.lambdaschool.school.model.Course;
+import com.lambdaschool.school.model.Instructor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +25,9 @@ public class CourseServiceImplTest
     
     @Autowired
     private CourseService courseService;
+    
+    @Autowired
+    private InstructorService instructorService;
     
     @Before
     public void setUp() throws Exception
@@ -52,5 +58,21 @@ public class CourseServiceImplTest
     public void findCourseById()
     {
         assertEquals("JavaScript", courseService.findCourseById(2).getCoursename());
+    }
+    
+    @Test
+    public void save()
+    {
+        Instructor newInst = new Instructor("Mike");
+        
+        instructorService.save(newInst);
+    
+        Course newCourse = new Course("Testing", newInst);
+        
+        Course addedCourse = courseService.save(newCourse);
+        
+        Course foundCourse = courseService.findCourseById(addedCourse.getCourseid());
+        
+        assertEquals(addedCourse.getCourseid(), foundCourse.getCourseid());
     }
 }
