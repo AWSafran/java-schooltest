@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = CourseControllerTest.class, secure = false)
+@WebMvcTest(value = CourseController.class, secure = false)
 @ContextConfiguration(classes = SchoolApplicationTest.class)
 public class CourseControllerTest
 {
@@ -106,7 +106,7 @@ public class CourseControllerTest
         ObjectMapper mapper = new ObjectMapper();
         String courseString = mapper.writeValueAsString(course);
     
-        RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
+        RequestBuilder rb = MockMvcRequestBuilders.post(apiUrl).accept(MediaType.APPLICATION_JSON);
         MvcResult r = mockMvc.perform(rb).andReturn();
         String tr = r.getResponse().getContentAsString();
         
