@@ -1,5 +1,6 @@
 package com.lambdaschool.school.service;
 
+import com.lambdaschool.school.SchoolApplicationTest;
 import com.lambdaschool.school.SchoolApplicationTests;
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = SchoolApplicationTests.class)
+@SpringBootTest(classes = SchoolApplicationTest.class)
 public class CourseServiceImplTest
 {
     
@@ -39,5 +40,6 @@ public class CourseServiceImplTest
     @Test
     public void findCourseById()
     {
+        assertEquals("JavaScript", courseService.findCourseById(2).getCoursename());
     }
 }
